@@ -17,14 +17,14 @@ int main()
     
     const int max_dlugosc_hasla = 20 - 2;//int min_dlugosc_hasla = 2;
     //double kolejne_IC[max_dlugosc_hasla];
-    double* IC;
+    //double* IC;
 
     bool koniec_pliku = false;
     //int* TabPrzesu;
     //int zapetlenie = 0;
     char tmp_char;
     string tmp_str = "";
-    int tmp_int;
+    //int tmp_int;
     double tmp_double;
     
     int DlugoscHasla = 5;
@@ -32,14 +32,17 @@ int main()
     std::cout << "Dlugosc hasla: ";
     std::cin >> DlugoscHasla;
     
-     //licznik_znakow;
     double* licznik_znakow = new double[DlugoscHasla];
     for (int i = 0; i < DlugoscHasla; i++)
     {
-        licznik_znakow[DlugoscHasla] = 0;
+        licznik_znakow[i] = 0;
     }
 
-    IC = new double[DlugoscHasla];
+    double* IC = new double[DlugoscHasla];
+    for (size_t i = 0; i < DlugoscHasla; i++)
+    {
+        IC[i] = 0;
+    }
     
      //liczba_wystapien;
     double** liczba_wystapien = new double*[DlugoscHasla];
@@ -119,6 +122,8 @@ koniec:
     //std::cout << "\n\nDEBUG ONLY!!\n\n"; //DEBUG ONLY!!
     std::cout << "\nSredni index koincydencji wynosi: " << srdIC << "\n\n";
     //std::cout << "\n\nDEBUG ONLY!!\n\n"; //DEBUG ONLY!!
+
+    delete[] IC;
     delete[] licznik_znakow;
     for (size_t j = 0; j < DlugoscHasla; j++)
     {
