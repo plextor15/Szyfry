@@ -51,7 +51,7 @@ koniec1:
     //zaszyfrowany_tmp_in.open("zaszyfrowany_tmp.txt");
 
     
-    const int M = 20;   //max dlugosc hasla
+    const int M = 16;   //max dlugosc hasla
     int MTab[M];        //tab do wynikow
     int L = 3;          //dlugosc powtarzajacego kawalka
     int D = 0;          //odleglosc miedzy kawalkami
@@ -60,6 +60,8 @@ koniec1:
     std::vector<char> TabWzor;   //tab do przechowania znakow wzorcowych
     std::vector<char> tabtmp;
     std::vector<char> wyciagniety;
+
+    std::vector<char> tmpstring = { 'V','M','E' };
 
     for (size_t i = 0; i < M; i++) MTab[i] = 0; //zerowanie
 
@@ -110,12 +112,15 @@ koniec1:
         //}
     }*/
 
-    for (size_t l = 4; l < M; l++) //w kazdym przebiegu zasysana do testu inna ilosc liter
+    bool sprawdzenie;
+    string s1, s2;
+
+    for (size_t l = 3; l < M; l++) //w kazdym przebiegu zasysana do testu inna ilosc liter
     {
         //std::cout << l << "\n"; //DEBUG ONLY
         for (size_t i = 0; i < zaszyfrowany_tmp.size()-M-l-1; i++)
         {
-            //std::cout << "    " << (double)i/zaszyfrowany_tmp.size() << "\n"; //DEBUG ONLY
+            //std::cout << "    " << l << " | " << (double)i / zaszyfrowany_tmp.size() << "\n"; //DEBUG ONLY
             for (size_t j = 0; j < l; j++)
             {
                 TabWzor.push_back(zaszyfrowany_tmp[i + j]);//zaciaganie wzoru
@@ -131,7 +136,9 @@ koniec1:
 
                 if (TabWzor == tabtmp) 
                 {
-                    MTab[l]++;
+                    std::cout << "fgfdgsgdfg"; //DEBUG ONLY
+                    //return 0;
+                    MTab[l] += MTab[l] + 1;
                 }
             }
         }
