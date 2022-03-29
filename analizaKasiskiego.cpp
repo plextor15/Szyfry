@@ -51,7 +51,7 @@ koniec1:
     //zaszyfrowany_tmp_in.open("zaszyfrowany_tmp.txt");
 
     
-    const int M = 16;   //max dlugosc hasla
+    const int M = 10;   //max dlugosc hasla
     int MTab[M];        //tab do wynikow
     int L = 3;          //dlugosc powtarzajacego kawalka
     int D = 0;          //odleglosc miedzy kawalkami
@@ -61,66 +61,27 @@ koniec1:
     std::vector<char> tabtmp;
     std::vector<char> wyciagniety;
 
-    std::vector<char> tmpstring = { 'V','M','E' };
+    //std::vector<char> tmpstring = { 'V','M','E' };
 
     for (size_t i = 0; i < M; i++) MTab[i] = 0; //zerowanie
 
-    /* {
-        //for (size_t q = 0; q < M; q++) //ile znakow ma byc pobierane do wzorca
-        //{
-            //petla 1 po tekscie
-        for (size_t i = 0; i < zaszyfrowany_tmp.size() - L; i++)
-        {
-            //petla 2 po tekscie
-            for (size_t j = L; j < zaszyfrowany_tmp.size(); j++)
-            {
-                wyciagniety.clear();
-                wyciagniety.resize(0);
+    //bool sprawdzenie;
+    //int pierw, drugi;
+    std::vector<int> powtorzenia;
 
-                for (size_t l = i; l < j - i; l++)
-                {
-                    wyciagniety.push_back(zaszyfrowany_tmp[l]);
-                }
-
-                //petla 3 po tekscie
-                for (size_t k = i; k < j; k++)
-                {
-                    for (size_t l = 0; l < iledowczytania; l++)
-                    {
-
-                    }
-
-                    //zliczanie powtorzen
-                    if (j - i > M)
-                    {
-                        ////zerowanie
-                        //for (size_t l = 0; l < M; l++)
-                        //{
-                        //    tabtmp[l] = '-';
-                        //}
-                        //
-                        //for (size_t l = 0; l < M; l++)
-                        //{
-                        //    tabtmp[l] = zaszyfrowany_tmp[i+l];
-                        //}
-
-
-                    }
-                }
-            }
-        }
-        //}
-    }*/
-
-    bool sprawdzenie;
-    string s1, s2;
-
-    for (size_t l = 3; l < M; l++) //w kazdym przebiegu zasysana do testu inna ilosc liter
+    for (size_t l = L; l < M; l++) //w kazdym przebiegu zasysana do testu inna ilosc liter
     {
         //std::cout << l << "\n"; //DEBUG ONLY
         for (size_t i = 0; i < zaszyfrowany_tmp.size()-M-l-1; i++)
         {
-            //std::cout << "    " << l << " | " << (double)i / zaszyfrowany_tmp.size() << "\n"; //DEBUG ONLY
+            std::cout << "    " << l << " | " << (double)i / zaszyfrowany_tmp.size() << "\n"; //DEBUG ONLY
+
+            TabWzor.clear();
+            TabWzor.resize(0);
+            tabtmp.clear();
+            tabtmp.resize(0);
+            //pierw = i + l;
+
             for (size_t j = 0; j < l; j++)
             {
                 TabWzor.push_back(zaszyfrowany_tmp[i + j]);//zaciaganie wzoru
@@ -130,16 +91,31 @@ koniec1:
             for (size_t q = i+l+l+1; q < zaszyfrowany_tmp.size(); q++) //zaszyfrowany_tmp.size()-(i+l+1)
             {
                 //std::cout << "        " << (float)l/M << " | " << (double)i / zaszyfrowany_tmp.size() << " -- " << (double)q / zaszyfrowany_tmp.size() << "\n"; //DEBUG ONLY
-
+                //std::cout << tabtmp[0] << " " << tabtmp[l-1] << "\n";//DEBUG ONLY
                 tabtmp.erase(tabtmp.begin());
                 tabtmp.push_back(zaszyfrowany_tmp[q]);
 
                 if (TabWzor == tabtmp) 
                 {
-                    std::cout << "fgfdgsgdfg"; //DEBUG ONLY
+                    //std::cout << "fgfdgsgdfg"; //DEBUG ONLY
                     //return 0;
-                    MTab[l] += MTab[l] + 1;
+                    //MTab[l] += MTab[l] + 1;
+
+                    powtorzenia.push_back(q);
+                    
+                    //pierw = q;
                 }
+            }
+        }
+    }
+
+    for (size_t i = 0; i < powtorzenia.size(); i++)
+    {
+        for (size_t j = L; j < M; j++)
+        {
+            if (powtorzenia[i] % j == 0)
+            {
+                MTab[j]++;
             }
         }
     }
