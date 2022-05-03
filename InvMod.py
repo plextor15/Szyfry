@@ -1,14 +1,28 @@
+#dzielenie metoda brute force: False - nie liczba piwerwsza / True - jest liczba piwerwsza
+def BruteDzielenie( n ):
+    i = 2
+    while i*i <= n:
+        if n % i == 0 and i != n:
+            return False
+        i += 1
+
+    return True
+
 #odwracanie modulo a*s mod b = 1
 def InvMod(a,b):
+    if BruteDzielenie(a) == False:
+        print("\n ", a, " nie jest liczba pierwsza! \n")
+        return 0
+
     q = 0
     
-    r2 = 0
-    r1 = 0
-    r = 0
+    r2 = 0  # jescze bardziej poprzednia
+    r1 = 0  # poprzednia
+    r = 0   # akyualna
     
-    s2 = 0
-    s1 = 0
-    s = 0
+    s2 = 0  # jescze bardziej poprzednia
+    s1 = 0  # poprzednia
+    s = 0   # akyualna
     
     if a < b:
         r2 = b
@@ -22,10 +36,13 @@ def InvMod(a,b):
         s1 = 0
         
     #petla
-    while r1 != 0:
-        q = r2 / r1
+    #while r1 != 0:
+    while True:
+        q = (int)(r2 / r1)
         r = r2 - q * r1
         s = s2 - q * s1
+
+        if r == 0: break
         
         r2 = r1
         r1 = r
@@ -36,7 +53,9 @@ def InvMod(a,b):
     
     # nie istnieje
     if r1!=1:
-        s = 0
+        # s = 0
+        print("\nNie istnieje\n")
+        return 0
         
     # ujemne s
     if s<0:
@@ -47,4 +66,6 @@ def InvMod(a,b):
 
 
 #main
-invmod(5,11)
+A = 5
+B = 11
+print("\n", InvMod(A, B), "\n")
