@@ -11,7 +11,7 @@ def BruteDzielenie( n ):
 #odwracanie modulo a*s mod b = 1
 def InvMod(a,b):
     if BruteDzielenie(a) == False:
-        print("\n ", a, " nie jest liczba pierwsza! \n")
+        #print("\n ", a, " nie jest liczba pierwsza! \n") #DEBUG ONLY!!
         return 0
 
     q = 0
@@ -54,7 +54,7 @@ def InvMod(a,b):
     # nie istnieje
     if r1!=1:
         # s = 0
-        print("\nNie istnieje\n")
+        #print("\nNie istnieje\n") #DEBUG ONLY!!
         return 0
         
     # ujemne s
@@ -65,7 +65,21 @@ def InvMod(a,b):
     return s
 
 
+import random
 #main
-A = 5
-B = 11
-print("\n", InvMod(A, B), "\n")
+#A = 5
+#B = 11
+#print("\n", InvMod(A, B), "\n")
+i=10
+while i!= 0:
+    A = random.randint(2,1000000)
+    B = random.randint(2,1000000)
+    X = InvMod(A,B)
+    
+    if X != 0:
+        i -= 1
+        Y = pow(A, -1, B)
+        if X == Y: S = "TAK"
+        else: S = "NIE"
+
+        print("  ", A, "s mod ", B, " = 1  - s=", X, "          ", S)
