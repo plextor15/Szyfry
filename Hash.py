@@ -40,30 +40,75 @@ def RandomString(ileznak):
     wynik = ''.join([random.choice(string.ascii_lowercase) for n in range(D)])
     return wynik
 
+def duplic_index(seq,item):
+    start_at = -1
+    locs = []
+    while True:
+        try:
+            loc = seq.index(item,start_at+1)
+        except ValueError:
+            break
+        else:
+            locs.append(loc)
+            start_at = loc
+    return locs
 
 M = 100000      #ile razy generujemy
-D = 8         #ilu znakowe ciagi
+D = 100         #ilu znakowe ciagi
 kolizje = 0
 
+# ---------------------------------------
 
-ListaHashy = []
-ListaWygen = []
+print("DJB\n\n")
 
-for i in range(M):
-    ll = RandomString(D)
-    if ll not in ListaWygen:
-        ListaWygen.append(ll)
+Wygen = []
+Hashe = []
 
-I = 0
-for i in ListaWygen:
-    h = DJB(ListaWygen[I])
-    if h not in ListaHashy:
-        ListaHashy.append(h)
+for i in range(0,M):
+
+    l = RandomString(D)
+    if l not in Wygen:
+        Wygen.append(l)
+    else:
+        #print("BYLO")
+        break
+
+    h = DJB(l)
+    if h not in Hashe:
+        Hashe.append(h)
     else:
         kolizje += 1
-        ListaHashy.append(h)
-    I += 1
+        Hashe.append(h)
+        lol = duplic_index(Hashe,h)
+        print("\n\nKOLIZJA NR ", kolizje, "    ", Wygen[lol[0]], " ", Wygen[lol[1]], " ", h, "\n\n")
 
-#print( ListaWygen )
-#print( ListaHashy )
-print( kolizje )
+    if i % 1000 == 0: print("nr - ", i, "  ", l, "  ", h, "         ", len(Wygen), " , ", len(Hashe))
+print(kolizje)
+
+# -----------------------------------------
+
+#print("Adler32\n\n")
+
+#Wygen = []
+#Hashe = []
+
+#for i in range(0,M):
+
+#    l = RandomString(D)
+#    if l not in Wygen:
+#        Wygen.append(l)
+#    else:
+#        #print("BYLO")
+#        break
+
+#    h = Adler32(l)
+#    if h not in Hashe:
+#        Hashe.append(h)
+#    else:
+#        kolizje += 1
+#        Hashe.append(h)
+#        lol = duplic_index(Hashe,h)
+#        print("KOLIZJA NR ", kolizje, "    ", Wygen[lol[0]], " ", Wygen[lol[1]], " ", h, "")
+
+#    if i % 5000 == 0: print("nr - ", i, "  ", l, "  ", h, "         ", len(Wygen), " , ", len(Hashe))
+#print(kolizje)
