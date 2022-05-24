@@ -74,7 +74,7 @@ for i in range(0,M):
 print("Wygen\n")
 
 
-file = open("HashTablicaEx.txt", "r")
+file = open("HashTablicaSkrocone.txt", "r")
 #Line = file.readline()
 HashTabStr = []
 HashTabHa = []
@@ -85,8 +85,33 @@ for Line in file:
     #print( fString + "-" + str(fHash) ) #DEBUG ONLY!!
     HashTabStr.append(fString)
     HashTabHa.append(fHash)
+    print(fString, str(fHash)) #DEBUG ONLY
 
 file.close()
+
+
+SkroconaTab = []
+Wiersz = []
+aktualHash = 0
+aktualString = HashTabStr[0]
+
+for hStr in HashTabStr:
+    Wiersz = []
+    #print(hStr)
+    aktualString = hStr
+    for l in range(10000):
+        Wiersz.append(aktualString)
+        aktualHash = DJB(aktualString)
+        Wiersz.append(aktualHash)
+        aktualString = HashToStr(aktualHash, 8)
+    SkroconaTab.append(Wiersz)
+
+    strtmp = ""
+    for i in range(1,10,2):
+        strtmp += str(Wiersz[i]) + " "
+    print(strtmp)
+print("Odbudowany")
+
 
 #print(HashTab) #DEBUG ONLY!!
 file2 = open("Kolizje.txt", "x")
@@ -95,7 +120,7 @@ Kolizje = []
 kolizjeString = ""
 
 for i in range( 0, len(WygenStr) ):
-    #print("- ",i,"/",M)  #DEBUG ONLY!!
+    print("- ",i,"/",len(WygenStr))  #DEBUG ONLY!!
 
     NIEznaleziony = True
     for j in range( 0, len(HashTabHa) ):
@@ -111,22 +136,72 @@ for i in range( 0, len(WygenStr) ):
             break
 
     if NIEznaleziony:
-        aktualHash = WygenHa[i]
-        aktualString = ""
+        for x in SkroconaTab:
+            for l in range(1, 10000, 2):
+                if x[l] == WygenHa[i]:
+                    NIEznaleziony = False
 
-        for l in range(10000):
-            #print("-| ",l,"/",10000)  #DEBUG ONLY!!
-            aktualString = HashToStr(aktualHash, 8)
-            aktualHash = DJB(aktualString)
+                    kolizjeString = WygenStr[i] + "  " + str(HashTabHa[i]) + "  " + x[l-1] + "z ciagu"
+                    Kolizje.append(kolizjeString)
 
-            if aktualHash == WygenHa[i]:
-                kolizjeString = WygenStr[i] + "  " + str(HashTabHa[i]) + "  " + aktualString + "z ciagu"
-                Kolizje.append(kolizjeString)
+                    kolizjeString += "\n"
+                    file2.write(kolizjeString)
+                    break
+                
 
-                kolizjeString += "\n"
-                file2.write(kolizjeString)
+            if not(NIEznaleziony):
                 break
 
+        #for x in SkroconaTab:
+        #    for l in range(0, 10000, 2):
+        #        if x[l] == WygenHa[i]:
+        #            NIEznaleziony = False
+
+        #            kolizjeString = WygenStr[i] + "  " + str(HashTabHa[i]) + "  " + x[l-1] + "z ciagu"
+        #            Kolizje.append(kolizjeString)
+
+        #            kolizjeString += "\n"
+        #            file2.write(kolizjeString)
+        #            break
+                
+
+        #    if not(NIEznaleziony):
+        #        break
+
+
+
+
+
+
+
+
+
+
+
+
+
+        ##aktualHash = WygenHa[i]
+        #aktualHash = 0
+        #aktualString = HashTabStr[0]
+
+        #for j in range( 0, len(HashTabHa) ):
+        #    for l in range(10000):
+        #        aktualHash = DJB(aktualString)
+        #        aktualString = HashToStr(aktualHash, 8)
+                
+        #        if aktualHash == WygenHa[i]:
+        #            NIEznaleziony = False
+
+        #            kolizjeString = WygenStr[i] + "  " + str(HashTabHa[i]) + "  " + aktualString + "z ciagu"
+        #            Kolizje.append(kolizjeString)
+
+        #            kolizjeString += "\n"
+        #            file2.write(kolizjeString)
+        #            break
+        #        l += 1
+
+        #    if not(NIEznaleziony):
+        #        break
     
 file2.close()
 for i in Kolizje: print(i)
