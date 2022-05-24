@@ -63,12 +63,15 @@ def HashTabGen(N, M, ileznak):
             TablicaSpr.append( JegoHash )
             TablicaElem.append( PierStrWiersz )
             print(" - ", PierStrWiersz, "  ", JegoHash)
+            dowpisania = "" + PierStrWiersz + " " + JegoHash + "\n"
+            file.write( dowpisania )
         dlugosc += 1
+        print(" - ", dlugosc)
         
     
-    for i in range( len(TablicaElem) ):
-        dowpisania = "" + TablicaElem[i] + " " + TablicaSpr[i] + "\n"
-        file.write( dowpisania )
+    #for i in range( len(TablicaElem) ):
+    #    dowpisania = "" + TablicaElem[i] + " " + TablicaSpr[i] + "\n"
+    #    file.write( dowpisania )
 
     file.close()
 
@@ -78,4 +81,5 @@ def HashTabGen(N, M, ileznak):
 #print(HashToStr(30, 8))
 #for i in range(97,123,1): print(i, " - ", chr(i))
 
-HashTabGen(500, 200, 8)
+#HashTabGen(500, 200, 8)
+HashTabGen(10000, 100000, 8)
